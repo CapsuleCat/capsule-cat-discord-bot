@@ -9,7 +9,7 @@
     "lint": "eslint src"
   },
   "author": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
