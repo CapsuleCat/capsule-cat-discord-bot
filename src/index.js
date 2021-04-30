@@ -40,7 +40,7 @@ client.on('message', (message) => {
 		return message.reply(`You didn't provide any arguments, ${message.author}!`);
 	}
 
-	if (command.channelId && message.channel.id !== command.channelId) {
+	if (command.channelID && message.channel.id !== command.channelID) {
 		// Only allow this command to be run in certain channels
 		return;
 	}
