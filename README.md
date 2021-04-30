@@ -14,4 +14,9 @@ Capsule Cat Discord Bot
 
 ## Deployment
 
-TODO
+Run the scripts in `deployment`. You will need to remember to create a `.env` file with your `TOKEN` in it for your discord bot.
+
+## Docs
+
+- See [discord.js](https://discord.js.org/#/docs/main/stable/general/welcome)
+- See [discord.js guide](https://discordjs.guide/)

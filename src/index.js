@@ -36,6 +36,15 @@ client.on('message', (message) => {
 
 	const command = client.commands.get(commandName);
 
+	if (command.args && !args.length) {
+		return message.reply(`You didn't provide any arguments, ${message.author}!`);
+	}
+
+	if (command.channelId && message.channel.id !== command.channelId) {
+		// Only allow this command to be run in certain channels
+		return;
+	}
+
 	const { cooldowns } = client;
 
 	if (!cooldowns.has(command.name)) {
@@ -51,7 +60,7 @@ client.on('message', (message) => {
 
 		if (now < expirationTime) {
 			// const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`Stop spamming \`${command.name}\`.`);
+			return message.reply(`stop spamming \`${command.name}\`.`);
 		}
 	}
 
