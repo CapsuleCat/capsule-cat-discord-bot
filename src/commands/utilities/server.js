@@ -13,8 +13,9 @@ module.exports = {
 		}
 
 		try {
-			const [siData, pm2Data] = await Promise.all([
+			const [siData, memData, pm2Data] = await Promise.all([
 				si.currentLoad(),
+				si.mem(),
 				checkPm2(),
 			]);
     
@@ -23,6 +24,8 @@ module.exports = {
 				`· CPU:\t\t${siData.currentLoad.toFixed(2)}%`,
 				`· User:\t\t${siData.currentLoadUser.toFixed(2)}%`,
 				`· System:\t${siData.currentLoadSystem.toFixed(2)}%`,
+				`· Mem Total:\t${memData.total} bytes`,
+				`· Mem Free:\t${memData.free} bytes`,
 				`· Health:\t${pm2Data ? 'OK' : 'BAD'}`,
 			].join('\n'));
 		} catch (e) {
