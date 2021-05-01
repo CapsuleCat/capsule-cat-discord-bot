@@ -5,5 +5,6 @@ module.exports = {
 	},
 	CHANNELS: {
 		STONKS: '829876781934575616',
+		TECH_DEALS: '823944920489525258',
 	}
 };
