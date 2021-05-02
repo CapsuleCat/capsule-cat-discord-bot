@@ -106,12 +106,14 @@ module.exports = function onSubmission(client) {
 		const embed = new MessageEmbed()
 			.setTitle(shortTitle)
 			.setColor(tagColor(tag))
-			.setDescription(`<@&838197227419729920>\nTag: ${tag}\nPrice: ${price}\n\n${mappedUrl}\n\nLinks may contain affiliate codes`);
+			.setDescription(`Tag: ${tag}\nPrice: ${price}\n\n${mappedUrl}\n\nLinks may contain affiliate codes`);
         
 		if (thumbnail && thumbnail !== 'default') {
 			embed.setThumbnail(thumbnail);
 		}
 
-		channel.send(embed);
+		channel.send('<@&838197227419729920>', {
+			embeds: [embed]
+		});
 	};
 };
