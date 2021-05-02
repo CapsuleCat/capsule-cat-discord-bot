@@ -1,15 +1,15 @@
 require('dotenv').config();
 
-const fs = require('fs');
 const Discord = require('discord.js');
+const fs = require('fs');
 const reddit = require('./services/reddit');
+const discord = require('./services/discord');
 const redditSubmissionHandler = require('./automation/redditSubmission');
+const notificationSelection = require('./automation/notificationSelection');
 
 const prefix = '!';
 
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-client.cooldowns = new Discord.Collection();
+const client = discord();
 
 const commandFolders = fs.readdirSync('./src/commands');
 
@@ -26,6 +26,8 @@ client.on('ready', () => {
 
 	client.user.setStatus('online');
 	client.user.setActivity('the skies', { type: 'WATCHING' });
+
+	notificationSelection.init(client);
 });
 
 client.on('message', (message) => {
@@ -74,6 +76,9 @@ client.on('message', (message) => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+
+client.on('messageReactionAdd', notificationSelection.messageReactionAddHandler);
+client.on('messageReactionRemove', notificationSelection.messageReactionRemoveHandler);
 
 client.login(process.env.TOKEN);
 

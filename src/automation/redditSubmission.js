@@ -57,7 +57,6 @@ function getAffiliateLink(url) {
 		u.hostname = 'smile.amazon.com';
         
 		u.searchParams.set('tag', process.env.AMAZON_AFFILIATE_ID);
-		console.log(u.hostname);
 	}
 
 	return u.toString();
@@ -66,7 +65,7 @@ function getAffiliateLink(url) {
 const ONE_HOUR = 60 * 60 * 1000;
 
 module.exports = function onSubmission(client) {
-	return function (item /* Submission */) {
+	return async function (item /* Submission */) {
 		const { title, thumbnail, url, quarantine, locked, hidden, created_utc, upvote_ratio } = item;
 		const createdAt = created_utc * 1000;
 
@@ -89,10 +88,25 @@ module.exports = function onSubmission(client) {
 
 		const mappedUrl = getAffiliateLink(url);
 
+		let hasSetMessages = false;
+
+		try {
+			const messages = await channel.messages.fetch({ limit: 10 });
+			if (messages.some(message => message.embeds && message.embeds[0].description.includes(mappedUrl))) {
+				hasSetMessages = true;
+			}
+		} catch (e) {
+			console.error('Failed to check channel messages', e);
+		}
+
+		if (hasSetMessages) {
+			return;
+		}
+
 		const embed = new MessageEmbed()
 			.setTitle(shortTitle)
 			.setColor(tagColor(tag))
-			.setDescription(`Tag: ${tag}\nPrice: ${price}\n\n${mappedUrl}\n\nLinks may contain affiliate codes`);
+			.setDescription(`<@&838197227419729920>\nTag: ${tag}\nPrice: ${price}\n\n${mappedUrl}\n\nLinks may contain affiliate codes`);
         
 		if (thumbnail && thumbnail !== 'default') {
 			embed.setThumbnail(thumbnail);
