@@ -113,7 +113,7 @@ module.exports = function onSubmission(client) {
 		}
 
 		channel.send('<@&838197227419729920>', {
-			embeds: [embed]
+			embed,
 		});
 	};
 };
