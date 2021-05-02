@@ -45,20 +45,6 @@ const init = async (client) => {
 };
 
 async function getReactionRole(reaction, user) {
-	if (reaction.partial) {
-		try {
-			await reaction.fetch();
-		} catch (error) {
-			console.error('Something went wrong when fetching the message: ', error);
-			return;
-		}
-	}
-
-	if (reaction.message.channel.id !== CHANNELS.NOTIFICATION_SELECTION) {
-		// We don't care about other reactions
-		return;
-	}
-
 	if (reaction.message.embeds && reaction.message.embeds.length > 0) {
 		const description = reaction.message.embeds[0].description;
 
@@ -88,6 +74,20 @@ async function getReactionRole(reaction, user) {
 } 
 
 const messageReactionAddHandler = async (reaction, user) => {
+	if (reaction.partial) {
+		try {
+			await reaction.fetch();
+		} catch (error) {
+			console.error('Something went wrong when fetching the message: ', error);
+			return;
+		}
+	}
+
+	if (reaction.message.channel.id !== CHANNELS.NOTIFICATION_SELECTION) {
+		// We don't care about other reactions
+		return;
+	}
+
 	if (reaction._emoji.name !== '✅') {
 		reaction.remove().catch(error => console.error('Failed to remove reactions: ', error));
 		return;
@@ -102,6 +102,20 @@ const messageReactionAddHandler = async (reaction, user) => {
 };
 
 const messageReactionRemoveHandler = async (reaction, user) => {
+	if (reaction.partial) {
+		try {
+			await reaction.fetch();
+		} catch (error) {
+			console.error('Something went wrong when fetching the message: ', error);
+			return;
+		}
+	}
+
+	if (reaction.message.channel.id !== CHANNELS.NOTIFICATION_SELECTION) {
+		// We don't care about other reactions
+		return;
+	}
+
 	const res = await getReactionRole(reaction, user);
 
 	if (res) {
