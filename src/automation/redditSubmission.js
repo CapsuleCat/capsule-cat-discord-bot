@@ -45,6 +45,8 @@ function tagColor(tag) {
 		return '#3333FF';
 	case 'monitor':
 		return '#999922';
+	case 'fans':
+		return '#000000';
 	default:
 		return '#888888';
 	}
