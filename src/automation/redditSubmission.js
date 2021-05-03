@@ -117,5 +117,19 @@ module.exports = function onSubmission(client) {
 		channel.send('<@&838197227419729920>', {
 			embed,
 		});
+
+		/**
+		 * Forward our beautiful submissions to another discord server
+		 */
+		if (process.env.FORWARD_SERVER) {
+			const parts = process.env.FORWARD_SERVER.split('/');
+			const id = parts[parts.length - 2];
+			const token = parts[parts.length - 1];
+			const webhookClient = new Discord.WebhookClient(id, token);
+    
+			webhookClient.send('FWD from CapsuleCat:', {
+				embeds: [embed],
+			});
+		}
 	};
 };

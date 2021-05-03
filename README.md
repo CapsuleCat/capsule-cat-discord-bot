@@ -8,9 +8,26 @@ Capsule Cat Discord Bot
 !ban <mention>
 !unban <mention>
 !kick <mention>
+!gwei
+!amd
+!bb
+!evga
+!zotac
+!apex
 !berd
 !server
 ```
+
+## Services
+
+### Reddit
+
+TODO
+
+### EthGasStation
+
+1. Sign up for an account: https://data.defipulse.com/signup
+2. See docs on how to use api key: https://docs.ethgasstation.info/gas-price
 
 ## Deployment
 
