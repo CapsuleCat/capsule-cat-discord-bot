@@ -2,7 +2,7 @@ const rp = require('request-promise');
 
 const getGasPrice = async () => {
 	try {
-		const response = await rp(`https://ethgasstation.info/api/ethgasAPI.json?api-key=${process.env.ETH_GAS_KEY}`, {
+		const response = await rp(`https://ethgasstation.info/json/ethgasAPI.json?api-key=${process.env.ETH_GAS_KEY}`, {
 			json: true,
 		});
 
