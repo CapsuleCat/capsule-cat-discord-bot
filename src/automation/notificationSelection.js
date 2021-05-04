@@ -18,7 +18,7 @@ const init = async (client) => {
 
 		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@stonkers'))) {
 			const embed = new MessageEmbed()
-				.setTitle('GPU Tacking')
+				.setTitle('GPU Tracking')
 				.setColor('#0bbd9f')
 				.setDescription('React with ✅ to be assigned the @stonkers role.');
 			channel.send(embed);
@@ -34,7 +34,7 @@ const init = async (client) => {
 
 		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@console-pleb'))) {
 			const embed2 = new MessageEmbed()
-				.setTitle('Console Deals')
+				.setTitle('Console Tracking')
 				.setColor('#3344AA')
 				.setDescription('React with ✅ to be assigned the @console-pleb role.');
 			channel.send(embed2);
