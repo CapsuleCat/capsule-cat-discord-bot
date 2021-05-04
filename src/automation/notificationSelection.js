@@ -12,36 +12,37 @@ const init = async (client) => {
 	// TODO Create the notification messages if necessary
 	const channel = client.channels.cache.get(CHANNELS.NOTIFICATION_SELECTION);
 
-	let hasSetMessages = false;
-
 	try {
 		const messages = await channel.messages.fetch({ limit: 10 });
-		if (messages.some(message => message.author.id === client.user.id)) {
-			hasSetMessages = true;
+
+
+		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@stonkers'))) {
+			const embed = new MessageEmbed()
+				.setTitle('GPU Tacking')
+				.setColor('#0bbd9f')
+				.setDescription('React with ✅ to be assigned the @stonkers role.');
+			channel.send(embed);
+		}
+
+		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@tech-deals'))) {
+			const embed2 = new MessageEmbed()
+				.setTitle('Tech Deals')
+				.setColor('#999999')
+				.setDescription('React with ✅ to be assigned the @tech-deals role.');
+			channel.send(embed2);
+		}
+
+		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@console-pleb'))) {
+			const embed2 = new MessageEmbed()
+				.setTitle('Console Deals')
+				.setColor('#3344AA')
+				.setDescription('React with ✅ to be assigned the @console-pleb role.');
+			channel.send(embed2);
 		}
 	} catch (e) {
 		console.error('Failed to check channel messages', e);
 	}
-
-	if (hasSetMessages) {
-		return;
-	}
-
-	const embed = new MessageEmbed()
-		.setTitle('GPU Tacking')
-		.setColor('#0bbd9f')
-		.setDescription('React with ✅ to be assigned the @stonkers role.');
-
-
-	channel.send(embed);
-
-	const embed2 = new MessageEmbed()
-		.setTitle('Tech Deals')
-		.setColor('#999999')
-		.setDescription('React with ✅ to be assigned the @tech-deals role.');
-
-
-	channel.send(embed2);
+	
 };
 
 async function getReactionRole(reaction, user) {
@@ -63,6 +64,8 @@ async function getReactionRole(reaction, user) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'stonkers');
 		} else if (description.includes('@tech-deals')) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'tech-deals');
+		} else if (description.includes('@console-pleb')) {
+			role = reaction.message.guild.roles.cache.find(r => r.name === 'console-pleb');
 		}
 
 		if (role && member) {
