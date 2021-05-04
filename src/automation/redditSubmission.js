@@ -61,6 +61,11 @@ function getAffiliateLink(url) {
 		u.searchParams.set('tag', process.env.AMAZON_AFFILIATE_ID);
 	}
 
+	if (u.hostname.includes('asus.com')) {
+		u.searchParams.set('affiliate_id', process.env.ASUS_AFFILIATE_ID);
+		u.searchParams.set('referring_service', 'link');
+	}
+
 	return u.toString();
 }
 
