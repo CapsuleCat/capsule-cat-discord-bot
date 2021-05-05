@@ -6,19 +6,26 @@ module.exports = {
 	args: true,
 	execute(message, args) {
 		try {
-
 			const time = args[0];
 			const timezone = args[1] || 'CST';
 			const tx = getTimezone(timezone);
     
 			let hour = parseInt(time, 10);
-			const offsetTime = time.includes('pm');
+			const offsetTime = time.toLowerCase().includes('pm');
 			if (offsetTime) {
 				hour += 12;
 			}
     
 			const now = new Date();
     
+			if (!tx) {
+				// try to manually map the folowing:
+				// "America/Chicago":{"u":-360,"d":-300,"c":"US"}
+
+				message.channel.send('❌ Could not interpret timezone');
+				return;
+			}
+
 			const dateString = `${now.getMonth() + 1}-${now.getDate()}-${now.getFullYear()} ${hour}:00:00Z${tx.utcOffsetStr}`;
     
 			const date = new Date(dateString);

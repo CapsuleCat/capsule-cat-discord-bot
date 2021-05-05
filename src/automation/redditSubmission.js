@@ -3,6 +3,18 @@ const { CHANNELS } = require('../utilities/constants');
 
 const MessageEmbed = Discord.MessageEmbed;
 
+const blacklist = [
+	'microcenter.com',
+	'woot.com'
+];
+
+function isBlacklistedUrl(url) {
+	if (blacklist.some(bl => url.includes(bl))) {
+		return true;
+	}
+	return false;
+}
+
 function parseDeal(title) {
 	let tag = '';
 	const tagMatch = title.match(/(\[.*?\])/);
@@ -92,6 +104,10 @@ module.exports = function onSubmission(client) {
 		if (!channel) return;
 
 		const { tag, shortTitle, price } = parseDeal(title);
+
+		if (isBlacklistedUrl(url)) {
+			return;
+		}
 
 		const mappedUrl = getAffiliateLink(url);
 
