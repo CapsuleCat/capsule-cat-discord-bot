@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const reddit = require('./services/reddit');
 const discord = require('./services/discord');
-const redditTechDeal = require('./automation/notificationSelection');
+const redditTechDeal = require('./automation/redditTechDeal');
+const redditGameDeal = require('./automation/redditGameDeal');
 const notificationSelection = require('./automation/notificationSelection');
 
 const prefix = '!';
@@ -86,6 +87,6 @@ reddit(redditTechDeal(client), {
 	subreddit: 'buildapcsales',
 });
 
-reddit(redditTechDeal(client), {
+reddit(redditGameDeal(client), {
 	subreddit: 'GameDeals',
 });
