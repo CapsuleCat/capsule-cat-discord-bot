@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const reddit = require('./services/reddit');
 const discord = require('./services/discord');
-const redditSubmissionHandler = require('./automation/redditSubmission');
+const redditTechDeal = require('./automation/notificationSelection');
 const notificationSelection = require('./automation/notificationSelection');
 
 const prefix = '!';
@@ -82,4 +82,10 @@ client.on('messageReactionRemove', notificationSelection.messageReactionRemoveHa
 
 client.login(process.env.TOKEN);
 
-reddit(redditSubmissionHandler(client));
+reddit(redditTechDeal(client), {
+	subreddit: 'buildapcsales',
+});
+
+reddit(redditTechDeal(client), {
+	subreddit: 'GameDeals',
+});

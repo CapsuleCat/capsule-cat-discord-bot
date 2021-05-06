@@ -1,7 +1,7 @@
 const Snoowrap = require('snoowrap');
 const { SubmissionStream } = require('snoostorm');
 
-module.exports = function reddit(onSubmission) {
+module.exports = function reddit(onSubmission, options) {
 	const client = new Snoowrap({
 		userAgent: 'reddit-bot-example-node',
 		clientId: process.env.REDDIT_CLIENT_ID,
@@ -11,7 +11,7 @@ module.exports = function reddit(onSubmission) {
 	});
         
 	const submissions = new SubmissionStream(client, {
-		subreddit: 'buildapcsales',
+		...options,
 		limit: 10,
 		pollTime: parseInt(process.env.REDDIT_POLL_TIME, 10),
 	});

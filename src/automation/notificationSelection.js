@@ -15,7 +15,6 @@ const init = async (client) => {
 	try {
 		const messages = await channel.messages.fetch({ limit: 10 });
 
-
 		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@stonkers'))) {
 			const embed = new MessageEmbed()
 				.setTitle('GPU Tracking')
@@ -37,6 +36,14 @@ const init = async (client) => {
 				.setTitle('Console Tracking')
 				.setColor('#3344AA')
 				.setDescription('React with ✅ to be assigned the @console-pleb role.');
+			channel.send(embed2);
+		}
+
+		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@game-deals'))) {
+			const embed2 = new MessageEmbed()
+				.setTitle('Game Deals')
+				.setColor('#999999')
+				.setDescription('React with ✅ to be assigned the @game-deals role.');
 			channel.send(embed2);
 		}
 	} catch (e) {
@@ -66,6 +73,8 @@ async function getReactionRole(reaction, user) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'tech-deals');
 		} else if (description.includes('@console-pleb')) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'console-pleb');
+		} else if (description.includes('@game-deals')) {
+			role = reaction.message.guild.roles.cache.find(r => r.name === 'game-deals');
 		}
 
 		if (role && member) {

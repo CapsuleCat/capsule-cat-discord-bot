@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
-const { CHANNELS } = require('../utilities/constants');
+const { CHANNELS, ROLES } = require('../utilities/constants');
+const checkRedditPost = require('../utilities/checkRedditPost');
+const getAffiliateLink = require('../utilities/affiliateLinks');
 
 const MessageEmbed = Discord.MessageEmbed;
 
@@ -24,7 +26,7 @@ function parseDeal(title) {
 	}
 
 	let price = '';
-	const priceMatch = title.match(/(\$[0-9.]+)/);
+	const priceMatch = title.match(/(\$[0-9.,]+)/);
 
 	if (priceMatch && priceMatch.length > 0) {
 		price = priceMatch[0];
@@ -64,39 +66,11 @@ function tagColor(tag) {
 	}
 }
 
-function getAffiliateLink(url) {
-	const u = new URL(url);
-
-	if (u.hostname.includes('amazon.com')) {
-		u.hostname = 'smile.amazon.com';
-        
-		u.searchParams.set('tag', process.env.AMAZON_AFFILIATE_ID);
-	}
-
-	if (u.hostname.includes('asus.com')) {
-		u.searchParams.set('affiliate_id', process.env.ASUS_AFFILIATE_ID);
-		u.searchParams.set('referring_service', 'link');
-	}
-
-	return u.toString();
-}
-
-const ONE_HOUR = 60 * 60 * 1000;
-
 module.exports = function onSubmission(client) {
 	return async function (item /* Submission */) {
-		const { title, thumbnail, url, quarantine, locked, hidden, created_utc, upvote_ratio } = item;
-		const createdAt = created_utc * 1000;
-
-		if (ONE_HOUR < Date.now() - createdAt) {
-			return;
-		}
-
-		if (upvote_ratio < 0.7) {
-			return;
-		}
-
-		if (quarantine || locked || hidden) {
+		const { title, thumbnail, url } = item;
+		
+		if (!checkRedditPost(item)) {
 			return;
 		}
 
@@ -135,7 +109,7 @@ module.exports = function onSubmission(client) {
 			embed.setThumbnail(thumbnail);
 		}
 
-		channel.send('<@&838197227419729920>', {
+		channel.send(`<@&${ROLES.TECH_DEALS}>`, {
 			embed,
 		});
 
