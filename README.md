@@ -2,6 +2,12 @@
 
 Capsule Cat Discord Bot
 
+## Setup
+
+1. Download the repo
+2. Create a `.env` file at the root of the project.
+3. Add your keys, see the `.env.template` file. The `TOKEN` key is your Discord bot token. For Reddit, you'll need to [create an app](https://ssl.reddit.com/prefs/apps/).
+
 ## Commands
 
 ```bash
@@ -22,7 +28,7 @@ Capsule Cat Discord Bot
 
 ### Reddit
 
-TODO
+This bot will crawl Reddit for tech deals and game deals. See the `src/automation` folder on how to create a new crawler. Don't forget to add it to the `src/index.js` file.
 
 ### EthGasStation
 
@@ -31,7 +37,7 @@ TODO
 
 ## Deployment
 
-Run the scripts in `deployment`. You will need to remember to create a `.env` file with your `TOKEN` in it for your discord bot.
+Run the scripts in `deployment`. You will need to remember to create a `.env` file with your `TOKEN` in it for your discord bot. Deployment uses pm2, so you can use the `ecosystem.config.js` file for easy deployment.
 
 ## Docs
 

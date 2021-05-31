@@ -55,6 +55,11 @@ module.exports = function onSubmission(client) {
 			console.error('Failed to check channel messages', e);
 		}
 
+		// TODO check steam domains...
+		// https://store.steampowered.com/appreviews/1091500/json=1
+		// store.steampowered.com/appreviews/<appid>?json=1
+		// 
+
 		if (hasSetMessages) {
 			return;
 		}
