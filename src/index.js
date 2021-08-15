@@ -7,6 +7,7 @@ const discord = require('./services/discord');
 const redditTechDeal = require('./automation/redditTechDeal');
 const redditGameDeal = require('./automation/redditGameDeal');
 const notificationSelection = require('./automation/notificationSelection');
+const { CHANNELS } = require('./utilities/constants');
 
 const prefix = '!';
 
@@ -87,7 +88,10 @@ reddit(redditTechDeal(client), {
 	subreddit: 'buildapcsales',
 });
 
-reddit(redditTechDeal(client), {
+reddit(redditTechDeal(client, {
+	channel: CHANNELS.TECH_DEALS_CA,
+	forward: false,
+}), {
 	subreddit: 'bapcsalescanada',
 });
 

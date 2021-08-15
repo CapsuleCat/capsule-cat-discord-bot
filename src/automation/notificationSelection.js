@@ -32,19 +32,27 @@ const init = async (client) => {
 		}
 
 		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@console-pleb'))) {
-			const embed2 = new MessageEmbed()
+			const embed3 = new MessageEmbed()
 				.setTitle('Console Tracking')
 				.setColor('#3344AA')
 				.setDescription('React with ✅ to be assigned the @console-pleb role.');
-			channel.send(embed2);
+			channel.send(embed3);
 		}
 
 		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@game-deals'))) {
-			const embed2 = new MessageEmbed()
+			const embed4 = new MessageEmbed()
 				.setTitle('Game Deals')
 				.setColor('#999999')
 				.setDescription('React with ✅ to be assigned the @game-deals role.');
-			channel.send(embed2);
+			channel.send(embed4);
+		}
+
+		if (!messages.some(message => message.embeds && message.embeds[0].description.includes('@tech-deals-ca'))) {
+			const embed4 = new MessageEmbed()
+				.setTitle('Tech Deals CA')
+				.setColor('#999999')
+				.setDescription('React with ✅ to be assigned the @tech-deals-ca role.');
+			channel.send(embed4);
 		}
 	} catch (e) {
 		console.error('Failed to check channel messages', e);
@@ -75,6 +83,8 @@ async function getReactionRole(reaction, user) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'console-pleb');
 		} else if (description.includes('@game-deals')) {
 			role = reaction.message.guild.roles.cache.find(r => r.name === 'game-deals');
+		} else if (description.includes('@tech-deals-ca')) {
+			role = reaction.message.guild.roles.cache.find(r => r.name === 'tech-deals-ca');
 		}
 
 		if (role && member) {

@@ -66,7 +66,7 @@ function tagColor(tag) {
 	}
 }
 
-module.exports = function onSubmission(client) {
+module.exports = function onSubmission(client, options = {}) {
 	return async function (item /* Submission */) {
 		const { title, thumbnail, url } = item;
 		
@@ -74,7 +74,7 @@ module.exports = function onSubmission(client) {
 			return;
 		}
 
-		const channel = client.channels.cache.get(CHANNELS.TECH_DEALS);
+		const channel = client.channels.cache.get(options.channel ? options.channel : CHANNELS.TECH_DEALS);
 		if (!channel) return;
 
 		const { tag, shortTitle, price } = parseDeal(title);
@@ -113,10 +113,12 @@ module.exports = function onSubmission(client) {
 			embed,
 		});
 
+		// Check for explicit false
+		const shouldForward = !(options.forward === false);
 		/**
 		 * Forward our beautiful submissions to another discord server
 		 */
-		if (process.env.FORWARD_SERVER) {
+		if (shouldForward && process.env.FORWARD_SERVER) {
 			const parts = process.env.FORWARD_SERVER.split('/');
 			const id = parts[parts.length - 2];
 			const token = parts[parts.length - 1];
