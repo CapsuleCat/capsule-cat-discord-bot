@@ -87,6 +87,10 @@ reddit(redditTechDeal(client), {
 	subreddit: 'buildapcsales',
 });
 
+reddit(redditTechDeal(client), {
+	subreddit: 'bapcsalescanada',
+});
+
 reddit(redditGameDeal(client), {
 	subreddit: 'GameDeals',
 });
