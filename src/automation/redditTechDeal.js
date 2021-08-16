@@ -109,7 +109,7 @@ module.exports = function onSubmission(client, options = {}) {
 			embed.setThumbnail(thumbnail);
 		}
 
-		channel.send(`<@&${ROLES.TECH_DEALS}>`, {
+		channel.send(`<@&${options.ping ? options.ping : ROLES.TECH_DEALS}>`, {
 			embed,
 		});
 
