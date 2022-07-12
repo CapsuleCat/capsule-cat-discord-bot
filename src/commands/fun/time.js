@@ -9,10 +9,10 @@ const customMapper = (timezone) => {
 		case 'PT':
 		case 'WA':
 		case 'WASHINGTON':
-			return 'PST8PDT';
+			return 'US/Pacific';
 		case 'MDT':
 		case 'MT':
-			return 'MST7MDT';
+			return 'US/Mountain';
 		case 'AZ':
 		case 'ARIZONA':
 			return 'US/Arizona';
@@ -20,12 +20,12 @@ const customMapper = (timezone) => {
 		case 'CDT':
 		case 'CT':
 		case 'CENTRAL':
-			return 'CST6CDT';
+			return 'US/Central';
 		case 'EST':
 		case 'EDT':
 		case 'ET':
 		case 'EASTERN':
-			return 'EST5EDT';
+			return 'US/Eastern';
 		default:
 			return upper;
 	}
