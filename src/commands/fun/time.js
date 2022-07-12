@@ -26,6 +26,9 @@ const customMapper = (timezone) => {
 		case 'ET':
 		case 'EASTERN':
 			return 'EST5EDT';
+		default:
+			return upper;
+	}
 }
 
 module.exports = {
