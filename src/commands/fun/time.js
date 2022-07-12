@@ -25,6 +25,8 @@ const customMapper = (timezone) => {
 		case 'CDT':
 		case 'CT':
 		case 'CENTRAL':
+		case 'TX':
+		case 'TEXAS':
 			return 'US/Central';
 		case 'EST':
 		case 'EDT':
@@ -53,6 +55,8 @@ module.exports = {
 			const offsetTime = time.toLowerCase().includes('pm');
 			if (offsetTime) {
 				hour += 12;
+			} else {
+				hour = hour % 12;
 			}
     
 			const now = new Date();
