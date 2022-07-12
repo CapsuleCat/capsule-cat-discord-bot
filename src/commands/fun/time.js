@@ -32,6 +32,7 @@ const customMapper = (timezone) => {
 		case 'EDT':
 		case 'ET':
 		case 'EASTERN':
+		case 'NEW YORK':
 			return 'US/Eastern';
 		default:
 			return upper;
