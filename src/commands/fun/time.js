@@ -1,12 +1,9 @@
 const {getTimezone} = require('countries-and-timezones');
+const moment = require('moment-timezone');
 
-function hasDST(date = new Date()) {
-	const january = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
-	const july = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-
-	return Math.max(january, july) !== date.getTimezoneOffset();
+function hasDST(name) {
+	return moment.tz(name).isDST();
 }
-
 
 const customMapper = (timezone) => {
 	const upper = timezone.toUpperCase();
@@ -68,7 +65,7 @@ module.exports = {
 				return;
 			}
 
-			const offset = hasDST() ? tx.dstOffsetStr : tx.utcOffsetStr;
+			const offset = hasDST(tx.name) ? tx.dstOffsetStr : tx.utcOffsetStr;
 
 			const dateString = `${now.getMonth() + 1}-${now.getDate()}-${now.getFullYear()} ${hour}:${minute}:00Z${offset}`;
     
