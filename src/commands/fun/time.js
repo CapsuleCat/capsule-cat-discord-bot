@@ -1,5 +1,33 @@
 const {getTimezone} = require('countries-and-timezones');
 
+const customMapper = (timezone) => {
+	const upper = timezone.toUpperCase();
+
+	switch (upper) {
+		case 'PST':
+		case 'PDT':
+		case 'PT':
+		case 'WA':
+		case 'WASHINGTON':
+			return 'PST8PDT';
+		case 'MDT':
+		case 'MT':
+			return 'MST7MDT';
+		case 'AZ':
+		case 'ARIZONA':
+			return 'US/Arizona';
+		case 'CST':
+		case 'CDT':
+		case 'CT':
+		case 'CENTRAL':
+			return 'CST6CDT';
+		case 'EST':
+		case 'EDT':
+		case 'ET':
+		case 'EASTERN':
+			return 'EST5EDT';
+}
+
 module.exports = {
 	name: 'time',
 	description: 'Translate times',
@@ -8,9 +36,12 @@ module.exports = {
 		try {
 			const time = args[0];
 			const timezone = args[1] || 'CST';
-			const tx = getTimezone(timezone);
+
+			const tx = getTimezone(customMapper(timezone));
     
-			let hour = parseInt(time, 10);
+			const timeSplits = time.split(':');
+			let hour = parseInt(timeSplits[0], 10);
+			let minute = timeSplits.length > 1 ? parseInt(timeSplits[1], 10) : 0;
 			const offsetTime = time.toLowerCase().includes('pm');
 			if (offsetTime) {
 				hour += 12;
@@ -26,16 +57,17 @@ module.exports = {
 				return;
 			}
 
-			const dateString = `${now.getMonth() + 1}-${now.getDate()}-${now.getFullYear()} ${hour}:00:00Z${tx.utcOffsetStr}`;
+			const dateString = `${now.getMonth() + 1}-${now.getDate()}-${now.getFullYear()} ${hour}:${minute}:00Z${tx.utcOffsetStr}`;
     
 			const date = new Date(dateString);
             
 			try {
 				const pt = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' });
-				const ct = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Chicago' });
 				const phoenix = date.toLocaleTimeString('en-US', { timeZoneName: 'long', timeZone: 'America/Phoenix' });
+				const ct = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Chicago' });
+				const et = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/New_York' });
         
-				message.channel.send(`⏰ ${args[0]} ${args[1]} is:\n · ${pt}\n · ${phoenix}\n · ${ct}`);
+				message.channel.send(`⏰ ${args[0]} ${args[1]} is:\n · ${pt}\n · ${phoenix}\n · ${ct}\n · ${et}`);
 			} catch (e) {
 				console.error(e);
 				message.channel.send('❌ Could not parse time and timezones');
