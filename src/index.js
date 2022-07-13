@@ -8,6 +8,7 @@ const redditTechDeal = require('./automation/redditTechDeal');
 const redditGameDeal = require('./automation/redditGameDeal');
 const notificationSelection = require('./automation/notificationSelection');
 const { CHANNELS, ROLES } = require('./utilities/constants');
+const messageHasBlacklist = require('./utilities/messageHasBlacklist');
 
 const prefix = '!';
 
@@ -34,6 +35,10 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+	if (messageHasBlacklist(message.content)) {
+		message.delete();
+	}
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
