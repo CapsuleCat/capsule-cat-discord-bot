@@ -112,10 +112,9 @@ async function run(client) {
 		subreddit: 'GameDeals',
 	});
 
-	cron.schedule('0 8 * * 1', function () {
+	cron.schedule('0 13 * * *', function () {
 		onCheckRealEstate(client);
 	});
-
 }
 
 module.exports = {
